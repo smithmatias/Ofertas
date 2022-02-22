@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PromocionesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Oferta">
+    <Key>
+      <PropertyRef Name="IDOferta" />
+    </Key>
+    <Property Name="IDOferta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IdProducto" Type="int" />
+    <Property Name="IdProveedor" Type="int" />
+    <Property Name="FechaInicio" Type="date" />
+    <Property Name="FechaFin" Type="date" />
+    <Property Name="PorcentajeDescuento" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="Producto">
+    <Key>
+      <PropertyRef Name="IdProducto" />
+    </Key>
+    <Property Name="IdProducto" Type="int" Nullable="false" />
+    <Property Name="Referencia" Type="varchar" MaxLength="50" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" />
+    <Property Name="ValorUnitario" Type="float" />
+    <Property Name="Stock" Type="int" />
+    <Property Name="Activo" Type="bit" />
+  </EntityType>
+  <EntityType Name="Proveedor">
+    <Key>
+      <PropertyRef Name="IdProveedor" />
+    </Key>
+    <Property Name="IdProveedor" Type="int" Nullable="false" />
+    <Property Name="Nit" Type="varchar" MaxLength="50" />
+    <Property Name="RazonSocial" Type="varchar" MaxLength="50" />
+    <Property Name="Telefono" Type="varchar" MaxLength="50" />
+    <Property Name="Direccion" Type="varchar" MaxLength="50" />
+    <Property Name="RepresentanteLegal" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK_Oferta_Oferta">
+    <End Role="Producto" Type="Self.Producto" Multiplicity="0..1" />
+    <End Role="Oferta" Type="Self.Oferta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Producto">
+        <PropertyRef Name="IdProducto" />
+      </Principal>
+      <Dependent Role="Oferta">
+        <PropertyRef Name="IdProducto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Oferta_Proveedor">
+    <End Role="Proveedor" Type="Self.Proveedor" Multiplicity="0..1" />
+    <End Role="Oferta" Type="Self.Oferta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Proveedor">
+        <PropertyRef Name="IdProveedor" />
+      </Principal>
+      <Dependent Role="Oferta">
+        <PropertyRef Name="IdProveedor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PromocionesModelStoreContainer">
+    <EntitySet Name="Oferta" EntityType="Self.Oferta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Producto" EntityType="Self.Producto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Proveedor" EntityType="Self.Proveedor" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Oferta_Oferta" Association="Self.FK_Oferta_Oferta">
+      <End Role="Producto" EntitySet="Producto" />
+      <End Role="Oferta" EntitySet="Oferta" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Oferta_Proveedor" Association="Self.FK_Oferta_Proveedor">
+      <End Role="Proveedor" EntitySet="Proveedor" />
+      <End Role="Oferta" EntitySet="Oferta" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

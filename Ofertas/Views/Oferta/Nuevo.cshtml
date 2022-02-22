@@ -1,0 +1,46 @@
+﻿@model Ofertas.ViewModels.OfertaViewModel
+@{
+    ViewBag.Title = "Nuevo";
+}
+
+<h2>Nuevo</h2>
+
+<form method ="post"action="@Url.Action("Nuevo","Oferta")">
+    <div class="form-group">
+        <label>Producto:</label>
+        <select name="Oferta.IdProducto">
+            <option>Seleccione una opción</option>
+            @foreach (var producto in Model.Productos)
+            {
+                <option value="@producto.IdProducto">@producto.Nombre</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Proveedor:</label>
+        <select name="Oferta.IdProveedor">
+            <option>Seleccione una opción</option>
+            @foreach (var proveedor in Model.Proveedores)
+            {
+                <option value="@proveedor.IdProveedor">@proveedor.RazonSocial</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Fecha Inicio:</label>
+        @Html.TextBoxFor(x => x.Oferta.FechaInicio, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Fecha Fin:</label>
+        @Html.TextBoxFor(x => x.Oferta.FechaFin, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        <label>Porcentaje de Descuento:</label>
+        @Html.TextBoxFor(x => x.Oferta.PorcentajeDescuento, new { @class = "form-control" })
+    </div>
+    <div>
+        <input type="submit" value="Guardar" class="btn-block" />
+    </div>
+</form>
